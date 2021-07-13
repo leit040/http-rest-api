@@ -2,9 +2,10 @@ package main
 
 import (
 	"flag"
-	"github.com/BurntSushi/toml"
-	"github.com/leit040/http-rest-api"
 	"log"
+
+	"github.com/BurntSushi/toml"
+	"github.com/leit040/http-rest-api/internal/app/apiserver"
 )
 
 var (
@@ -17,14 +18,14 @@ func init() {
 func main() {
 	flag.Parse()
 
-	config = apiserver.NewConfig()
+	config := apiserver.NewConfig()
 	_, err := toml.DecodeFile(configPath, config)
 	if err != nil {
-		log.Fatalf(err)
+		log.Fatal(err)
 	}
 	s := apiserver.New(config)
 	if err := s.Start(); err != nil {
 
-		log.Fatalf(err)
+		log.Fatal(err)
 	}
 }
